@@ -76,20 +76,24 @@
       <table id="all_drug" class="table" align="center">
 
         <tr>
-          <th>Manufacturer</th>
+          <th>Name</th>
           <th>ID</th>
-          <th>Timestamp</th>
-          <th>Holder</th>
-          <th>Drug Location <br>(Longitude, Latitude)</th>
+          <th>Company</th>
+          <th>Team</th>
+          <th>Date</th>
+          <th>In-Time</th>
+          <th>Out-Time</th>
 
         </tr>
 
         <tr ng-repeat="drug in all_drug">
-          <td>{{drug.manufacturer}}</td>
-          <td>{{drug.Key}}</td>
-          <td>{{drug.timestamp}}</td>
           <td>{{drug.holder}}</td>
-          <td>{{drug.location}}</td>
+          <td>{{tracker.Key}}</td>
+          <td>{{tracker.company}}</td>
+          <td>{{tracker.team}}</td>
+          <td>{{tracker.date}}</td>
+          <td>{{tracker.in-time}}</td>
+          <td>{{tracker.out-time}}</td>
         </tr>
       </table>
 
