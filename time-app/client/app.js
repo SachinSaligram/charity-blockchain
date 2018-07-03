@@ -28,43 +28,21 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
-	// $scope.queryTime = function(){
+	$scope.queryTime = function(){
 
-	// 	var id = $scope.time_id;
+		var id = $scope.time_id;
 
-	// 	appFactory.queryTime(id, function(data){
-	// 		$scope.query_time = data;
+		appFactory.queryTime(id, function(data){
+			$scope.query_time = data;
 
-	// 		if ($scope.query_time == "Could not locate time"){
-	// 			console.log()
-	// 			$("#error_query").show();
-	// 		} else{
-	// 			$("#error_query").hide();
-	// 		}
-	// 	});
-	// }
-
-	// $scope.recordTime = function(){
-
-	// 	appFactory.recordTime($scope.time, function(data){
-	// 		$scope.create_time = data;
-	// 		$("#success_create").show();
-	// 	});
-	// }
-
-	// $scope.changeHolder = function(){
-
-	// 	appFactory.changeHolder($scope.holder, function(data){
-	// 		$scope.change_holder = data;
-	// 		if ($scope.change_holder == "Error: no time found"){
-	// 			$("#error_holder").show();
-	// 			$("#success_holder").hide();
-	// 		} else{
-	// 			$("#success_holder").show();
-	// 			$("#error_holder").hide();
-	// 		}
-	// 	});
-	// }
+			if ($scope.query_time == "Could not locate time"){
+				console.log()
+				$("#error_query").show();
+			} else{
+				$("#error_query").hide();
+			}
+		});
+	}
 
 });
 
@@ -80,31 +58,11 @@ app.factory('appFactory', function($http){
 		});
 	}
 
-	// factory.queryTime = function(id, callback){
- //    	$http.get('/get_time/'+id).success(function(output){
-	// 		callback(output)
-	// 	});
-	// }
-
-	// factory.recordTime = function(data, callback){
-
-	// 	data.location = data.longitude + ", "+ data.latitude;
-
-	// 	var time = data.id + "-" + data.location + "-" + data.timestamp + "-" + data.holder + "-" + data.manufacturer;
-
- //    	$http.get('/add_time/'+time).success(function(output){
-	// 		callback(output)
-	// 	});
-	// }
-
-	// factory.changeHolder = function(data, callback){
-
-	// 	var holder = data.id + "-" + data.name;
-
- //    	$http.get('/change_holder/'+holder).success(function(output){
-	// 		callback(output)
-	// 	});
-	// }
+	factory.queryTime = function(id, callback){
+    	$http.get('/get_time/'+id).success(function(output){
+			callback(output)
+		});
+	}
 
 	return factory;
 });

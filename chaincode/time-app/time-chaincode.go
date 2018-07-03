@@ -36,8 +36,8 @@ type Tracker struct {
 	Company string `json:"company"`
 	Team  string `json:"team"`
 	Date  string `json:"date"`
-	Intime  string `json:"in-time"`
-	Outtime  string `json:"out-time"`
+	Intime  string `json:"intime"`
+	Outtime  string `json:"outtime"`
 }
 
 /*

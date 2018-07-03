@@ -63,21 +63,21 @@
   </head>
   <body ng-app="application" ng-controller="appController">
     <header>
-      <div id="left_header">Prescription Pain Medication Tracker</div>
-      <i id="right_header">Tracking medications from manufacturer to dispenser via blockchain</i>
+      <div id="left_header">Employee Swipe Tracker</div>
+      <i id="right_header">Track employee check-in and check-out times via blockchain</i>
     </header>
 
     <div id="body">
       <div class="form-group">
-        <label>Query All Time Packets</label>
+        <label>Check details for all employees</label>
         <p><input id="queryAllTime" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllTime()"></p>
       </div>
 
       <table id="all_time" class="table" align="center">
 
         <tr>
-          <th>Name</th>
           <th>ID</th>
+          <th>Name</th>
           <th>Company</th>
           <th>Team</th>
           <th>Date</th>
@@ -87,73 +87,44 @@
         </tr>
 
         <tr ng-repeat="tracker in all_time">
-          <td>{{tracker.holder}}</td>
           <td>{{tracker.Key}}</td>
+          <td>{{tracker.holder}}</td>
           <td>{{tracker.company}}</td>
           <td>{{tracker.team}}</td>
           <td>{{tracker.date}}</td>
-          <td>{{tracker.in-time}}</td>
-          <td>{{tracker.out-time}}</td>
+          <td>{{tracker.intime}}</td>
+          <td>{{tracker.outtime}}</td>
         </tr>
       </table>
 
       <div class="form-group">
-        <label>Query a Specific Time Packet</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Time Id</h5>
+        <label>Check details for a specific employee</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid id</h5>
 
-        Enter a packet number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="time_id">
+        Enter a the id: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="time_id">
         <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryTime()">
       </div>
 
       <table id="query_time" class="table" align="center">
 
         <tr>
-          <th>Manufacturer</th>
-          <th>Timestamp</th>
-          <th>Holder</th>
-          <th>Packet Location <br>(Longitude, Latitude)</th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Team</th>
+          <th>Date</th>
+          <th>In-Time</th>
+          <th>Out-Time</th>
+
         </tr>
 
-        <tr>
-          <td>{{query_time.manufacturer}}</td>
-          <td>{{query_time.timestamp}}</td>
           <td>{{query_time.holder}}</td>
-          <td>{{query_time.location}}</td>
+          <td>{{query_time.company}}</td>
+          <td>{{query_time.team}}</td>
+          <td>{{query_time.date}}</td>
+          <td>{{query_time.intime}}</td>
+          <td>{{query_time.outtime}}</td>
         </tr>
       </table>
-
-      <div class="form-group">
-        <label>Create Time Record</label>
-        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_time}}</h5>
-        <br>
-        Enter catch id:
-          <input class="form-control" type="text" placeholder="Ex: 11" ng-model="time.id">
-        Enter name of manufacturer:
-          <input class="form-control" type="text" placeholder="Ex: 0239L" ng-model="time.manufacturer">
-        Enter longitude:
-          <input id="createName" class="form-control" type="text" placeholder="Ex: 28.012" ng-model="time.longitude">
-        Enter latitude:
-          <input id="createName" class="form-control" type="text" placeholder="Ex: 150.405" ng-model="time.latitude">
-        Enter timestamp:
-          <input class="form-control" type="text" placeholder="Ex: 4982342301"   ng-model="time.timestamp">
-        Enter name of holder:
-          <input class="form-control" type="text" placeholder="Ex: Martell's" ng-model="time.holder">
-
-        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="recordTime()">
-      </div>
-
-      <div class="form-group">
-        <label>Change Time Holder</label><br>
-        <h5 style="color:green;margin-bottom:2%"
-          id="success_holder">Success! Tx ID: {{change_holder}}</h5>
-        <h5 style="color:red;margin-bottom:2%"
-          id="error_holder">Error: Please enter a valid Time Id</h5>
-        Enter a catch id between 1 and 10:
-          <input class="form-control" name="assetSelect"  placeholder="Ex: 1" ng-model="holder.id">
-        Enter name of new holder:
-          <input class="form-control" name="assetSelect" placeholder="Ex: PharmaHealth" ng-model="holder.name">
-        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeHolder()">
-      </div>
 
     </div>
   </body>
