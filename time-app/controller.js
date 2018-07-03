@@ -19,8 +19,8 @@ var os            = require('os');
 
 module.exports = (function() {
 return{
-	get_all_drug: function(req, res){
-		console.log("getting all drug from database: ");
+	get_all_time: function(req, res){
+		console.log("getting all time from database: ");
 
 		var fabric_client = new Fabric_Client();
 
@@ -57,11 +57,11 @@ return{
 		        throw new Error('Failed to get user1.... run registerUser.js');
 		    }
 
-		    // queryAllDrug - requires no arguments , ex: args: [''],
+		    // queryAllTime - requires no arguments , ex: args: [''],
 		    const request = {
-		        chaincodeId: 'drug-app',
+		        chaincodeId: 'time-app',
 		        txId: tx_id,
-		        fcn: 'queryAllDrug',
+		        fcn: 'queryAllTime',
 		        args: ['']
 		    };
 
@@ -84,10 +84,10 @@ return{
 		    console.error('Failed to query successfully :: ' + err);
 		});
 	},
-	add_drug: function(req, res){
-		console.log("submit recording of a drug catch: ");
+	add_time: function(req, res){
+		console.log("submit recording of a time catch: ");
 
-		var array = req.params.drug.split("-");
+		var array = req.params.time.split("-");
 		console.log(array);
 
 		var key = array[0]
@@ -137,12 +137,12 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordDrug - requires 5 args, ID, manufacturer, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'],
+		    // recordTime - requires 5 args, ID, manufacturer, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'],
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-		        chaincodeId: 'drug-app',
-		        fcn: 'recordDrug',
+		        chaincodeId: 'time-app',
+		        fcn: 'recordTime',
 		        args: [key, manufacturer, location, timestamp, holder],
 		        chainId: 'mychannel',
 		        txId: tx_id
@@ -243,7 +243,7 @@ return{
 		    console.error('Failed to invoke successfully :: ' + err);
 		});
 	},
-	get_drug: function(req, res){
+	get_time: function(req, res){
 
 		var fabric_client = new Fabric_Client();
 		var key = req.params.id
@@ -281,11 +281,11 @@ return{
 		        throw new Error('Failed to get user1.... run registerUser.js');
 		    }
 
-		    // queryDrug - requires 1 argument, ex: args: ['4'],
+		    // queryTime - requires 1 argument, ex: args: ['4'],
 		    const request = {
-		        chaincodeId: 'drug-app',
+		        chaincodeId: 'time-app',
 		        txId: tx_id,
-		        fcn: 'queryDrug',
+		        fcn: 'queryTime',
 		        args: [key]
 		    };
 
@@ -297,7 +297,7 @@ return{
 		    if (query_responses && query_responses.length == 1) {
 		        if (query_responses[0] instanceof Error) {
 		            console.error("error from query = ", query_responses[0]);
-		            res.send("Could not locate drug")
+		            res.send("Could not locate time")
 
 		        } else {
 		            console.log("Response is ", query_responses[0].toString());
@@ -305,15 +305,15 @@ return{
 		        }
 		    } else {
 		        console.log("No payloads were returned from query");
-		        res.send("Could not locate drug")
+		        res.send("Could not locate time")
 		    }
 		}).catch((err) => {
 		    console.error('Failed to query successfully :: ' + err);
-		    res.send("Could not locate drug")
+		    res.send("Could not locate time")
 		});
 	},
 	change_holder: function(req, res){
-		console.log("changing holder of drug catch: ");
+		console.log("changing holder of time catch: ");
 
 		var array = req.params.holder.split("-");
 		var key = array[0]
@@ -359,12 +359,12 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // changeDrugHolder - requires 2 args , ex: args: ['1', 'Barry'],
+		    // changeTimeHolder - requires 2 args , ex: args: ['1', 'Barry'],
 		    // send proposal to endorser
 		    var request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-		        chaincodeId: 'drug-app',
-		        fcn: 'changeDrugHolder',
+		        chaincodeId: 'time-app',
+		        fcn: 'changeTimeHolder',
 		        args: [key, holder],
 		        chainId: 'mychannel',
 		        txId: tx_id
@@ -443,7 +443,7 @@ return{
 		        return Promise.all(promises);
 		    } else {
 		        console.error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
-		        res.send("Error: no drug packet found");
+		        res.send("Error: no time packet found");
 		        // throw new Error('Failed to send Proposal or receive valid response. Response null or status is not 200. exiting...');
 		    }
 		}).then((results) => {
@@ -454,7 +454,7 @@ return{
 		        res.json(tx_id.getTransactionID())
 		    } else {
 		        console.error('Failed to order the transaction. Error code: ' + response.status);
-		        res.send("Error: no drug packet found");
+		        res.send("Error: no time packet found");
 		    }
 
 		    if(results && results[1] && results[1].event_status === 'VALID') {
@@ -465,7 +465,7 @@ return{
 		    }
 		}).catch((err) => {
 		    console.error('Failed to invoke successfully :: ' + err);
-		    res.send("Error: no drug packet found");
+		    res.send("Error: no time packet found");
 		});
 
 	}

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hyperledger Fabric Drug Application</title>
+    <title>Hyperledger Fabric Time Application</title>
     <link rel="icon" href="favicon.png" type="image/gif">
 
     <!-- require jquery and bootstrap scripts -->
@@ -69,11 +69,11 @@
 
     <div id="body">
       <div class="form-group">
-        <label>Query All Drug Packets</label>
-        <p><input id="queryAllDrug" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllDrug()"></p>
+        <label>Query All Time Packets</label>
+        <p><input id="queryAllTime" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllTime()"></p>
       </div>
 
-      <table id="all_drug" class="table" align="center">
+      <table id="all_time" class="table" align="center">
 
         <tr>
           <th>Name</th>
@@ -86,8 +86,8 @@
 
         </tr>
 
-        <tr ng-repeat="drug in all_drug">
-          <td>{{drug.holder}}</td>
+        <tr ng-repeat="tracker in all_time">
+          <td>{{tracker.holder}}</td>
           <td>{{tracker.Key}}</td>
           <td>{{tracker.company}}</td>
           <td>{{tracker.team}}</td>
@@ -98,14 +98,14 @@
       </table>
 
       <div class="form-group">
-        <label>Query a Specific Drug Packet</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Drug Id</h5>
+        <label>Query a Specific Time Packet</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Time Id</h5>
 
-        Enter a packet number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="drug_id">
-        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryDrug()">
+        Enter a packet number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="time_id">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryTime()">
       </div>
 
-      <table id="query_drug" class="table" align="center">
+      <table id="query_time" class="table" align="center">
 
         <tr>
           <th>Manufacturer</th>
@@ -115,39 +115,39 @@
         </tr>
 
         <tr>
-          <td>{{query_drug.manufacturer}}</td>
-          <td>{{query_drug.timestamp}}</td>
-          <td>{{query_drug.holder}}</td>
-          <td>{{query_drug.location}}</td>
+          <td>{{query_time.manufacturer}}</td>
+          <td>{{query_time.timestamp}}</td>
+          <td>{{query_time.holder}}</td>
+          <td>{{query_time.location}}</td>
         </tr>
       </table>
 
       <div class="form-group">
-        <label>Create Drug Record</label>
-        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_drug}}</h5>
+        <label>Create Time Record</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_time}}</h5>
         <br>
         Enter catch id:
-          <input class="form-control" type="text" placeholder="Ex: 11" ng-model="drug.id">
+          <input class="form-control" type="text" placeholder="Ex: 11" ng-model="time.id">
         Enter name of manufacturer:
-          <input class="form-control" type="text" placeholder="Ex: 0239L" ng-model="drug.manufacturer">
+          <input class="form-control" type="text" placeholder="Ex: 0239L" ng-model="time.manufacturer">
         Enter longitude:
-          <input id="createName" class="form-control" type="text" placeholder="Ex: 28.012" ng-model="drug.longitude">
+          <input id="createName" class="form-control" type="text" placeholder="Ex: 28.012" ng-model="time.longitude">
         Enter latitude:
-          <input id="createName" class="form-control" type="text" placeholder="Ex: 150.405" ng-model="drug.latitude">
+          <input id="createName" class="form-control" type="text" placeholder="Ex: 150.405" ng-model="time.latitude">
         Enter timestamp:
-          <input class="form-control" type="text" placeholder="Ex: 4982342301"   ng-model="drug.timestamp">
+          <input class="form-control" type="text" placeholder="Ex: 4982342301"   ng-model="time.timestamp">
         Enter name of holder:
-          <input class="form-control" type="text" placeholder="Ex: Martell's" ng-model="drug.holder">
+          <input class="form-control" type="text" placeholder="Ex: Martell's" ng-model="time.holder">
 
-        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="recordDrug()">
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="recordTime()">
       </div>
 
       <div class="form-group">
-        <label>Change Drug Holder</label><br>
+        <label>Change Time Holder</label><br>
         <h5 style="color:green;margin-bottom:2%"
           id="success_holder">Success! Tx ID: {{change_holder}}</h5>
         <h5 style="color:red;margin-bottom:2%"
-          id="error_holder">Error: Please enter a valid Drug Id</h5>
+          id="error_holder">Error: Please enter a valid Time Id</h5>
         Enter a catch id between 1 and 10:
           <input class="form-control" name="assetSelect"  placeholder="Ex: 1" ng-model="holder.id">
         Enter name of new holder:

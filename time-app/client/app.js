@@ -12,9 +12,9 @@ app.controller('appController', function($scope, appFactory){
 	$("#error_holder").hide();
 	$("#error_query").hide();
 
-	$scope.queryAllDrug = function(){
+	$scope.queryAllTime = function(){
 
-		appFactory.queryAllDrug(function(data){
+		appFactory.queryAllTime(function(data){
 			var array = [];
 			for (var i = 0; i < data.length; i++){
 				parseInt(data[i].Key);
@@ -24,18 +24,18 @@ app.controller('appController', function($scope, appFactory){
 			array.sort(function(a, b) {
 			    return parseFloat(a.Key) - parseFloat(b.Key);
 			});
-			$scope.all_drug = array;
+			$scope.all_time = array;
 		});
 	}
 
-	// $scope.queryDrug = function(){
+	// $scope.queryTime = function(){
 
-	// 	var id = $scope.drug_id;
+	// 	var id = $scope.time_id;
 
-	// 	appFactory.queryDrug(id, function(data){
-	// 		$scope.query_drug = data;
+	// 	appFactory.queryTime(id, function(data){
+	// 		$scope.query_time = data;
 
-	// 		if ($scope.query_drug == "Could not locate drug"){
+	// 		if ($scope.query_time == "Could not locate time"){
 	// 			console.log()
 	// 			$("#error_query").show();
 	// 		} else{
@@ -44,10 +44,10 @@ app.controller('appController', function($scope, appFactory){
 	// 	});
 	// }
 
-	// $scope.recordDrug = function(){
+	// $scope.recordTime = function(){
 
-	// 	appFactory.recordDrug($scope.drug, function(data){
-	// 		$scope.create_drug = data;
+	// 	appFactory.recordTime($scope.time, function(data){
+	// 		$scope.create_time = data;
 	// 		$("#success_create").show();
 	// 	});
 	// }
@@ -56,7 +56,7 @@ app.controller('appController', function($scope, appFactory){
 
 	// 	appFactory.changeHolder($scope.holder, function(data){
 	// 		$scope.change_holder = data;
-	// 		if ($scope.change_holder == "Error: no drug found"){
+	// 		if ($scope.change_holder == "Error: no time found"){
 	// 			$("#error_holder").show();
 	// 			$("#success_holder").hide();
 	// 		} else{
@@ -73,26 +73,26 @@ app.factory('appFactory', function($http){
 
 	var factory = {};
 
-    factory.queryAllDrug = function(callback){
+    factory.queryAllTime = function(callback){
 
-    	$http.get('/get_all_drug/').success(function(output){
+    	$http.get('/get_all_time/').success(function(output){
 			callback(output)
 		});
 	}
 
-	// factory.queryDrug = function(id, callback){
- //    	$http.get('/get_drug/'+id).success(function(output){
+	// factory.queryTime = function(id, callback){
+ //    	$http.get('/get_time/'+id).success(function(output){
 	// 		callback(output)
 	// 	});
 	// }
 
-	// factory.recordDrug = function(data, callback){
+	// factory.recordTime = function(data, callback){
 
 	// 	data.location = data.longitude + ", "+ data.latitude;
 
-	// 	var drug = data.id + "-" + data.location + "-" + data.timestamp + "-" + data.holder + "-" + data.manufacturer;
+	// 	var time = data.id + "-" + data.location + "-" + data.timestamp + "-" + data.holder + "-" + data.manufacturer;
 
- //    	$http.get('/add_drug/'+drug).success(function(output){
+ //    	$http.get('/add_time/'+time).success(function(output){
 	// 		callback(output)
 	// 	});
 	// }
