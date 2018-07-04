@@ -1,8 +1,13 @@
 # charity-blockchain
-Simple blockchain application to keep a track of charity registrations and spending.
+
+__Simple blockchain application to keep a track of charity registrations and spending.__
+
+Every time you donate money to a charity, do you know how much money they have at any point of time? Do you know how when, where and how money is being spent? I am building a simple blockchain application to keep a track of charity registrations and spending. This will help track every charity that has registered and track identify where every dollar is spent.
+
+This is a work in progress. Keep a look out for new features and do provide your suggestions! To have a look at what's working right now, follow the installation and setup instructions below.
 
 
-Installation Instructions
+__Installation Instructions__
 
 * Install [Node.js](https://nodejs.org/en/), [Go](https://golang.org/doc/install) and [Docker](https://docs.docker.com/install/) (CE edition is fine) installed.
 
