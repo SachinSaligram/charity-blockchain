@@ -30,19 +30,21 @@ type SmartContract struct {
 /* Define Time structure, with 4 properties.
 Structure tags are used by encoding/json library
 */
-type Tracker struct {
+type Registration struct {
 
-	Name string `json:"holder"`
-	Company string `json:"company"`
-	Team  string `json:"team"`
-	Date  string `json:"date"`
-	Intime  string `json:"intime"`
-	Outtime  string `json:"outtime"`
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Category string `json:"category"`
+	Country  string `json:"country"`
+	State  string `json:"state"`
+	City  string `json:"city"`
+	Registered string `json:"date"`
+	Director  string `json:"director"`
 }
 
 /*
  * The Init method *
- called when the Smart Contract "time-chaincode" is instantiated by the network
+ called when the Smart Contract "charity-chaincode" is instantiated by the network
  * Best practice is to have any Ledger initialization in separate function
  -- see initLedger()
  */
@@ -52,7 +54,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 /*
  * The Invoke method *
- called when an application requests to run the Smart Contract "time-chaincode"
+ called when an application requests to run the Smart Contract "charity-chaincode"
  The app also specifies the specific smart contract function to call with args
  */
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -60,33 +62,35 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	// Retrieve the requested Smart Contract function and arguments
 	function, args := APIstub.GetFunctionAndParameters()
 	// Route to the appropriate handler function to interact with the ledger
-	if function == "queryTime" {
-		return s.queryTime(APIstub, args)
+	if function == "queryCharity" {
+		return s.queryCharity(APIstub, args)
 	} else if function == "initLedger" {
 		return s.initLedger(APIstub)
-	} else if function == "queryAllTime" {
-		return s.queryAllTime(APIstub)
+	} else if function == "queryAllCharities" {
+		return s.queryAllCharities(APIstub)
+	} else if function == "recordCharity" {
+		return s.recordCharity(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
 }
 
 /*
- * The queryTime method *
-Used to view the records of one particular time
-It takes one argument -- the key for the time in question
+ * The queryCharity method *
+Used to view the records of one particular charity
+It takes one argument -- the key for the charity in question
  */
-func (s *SmartContract) queryTime(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) queryCharity(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	timeAsBytes, _ := APIstub.GetState(args[0])
-	if timeAsBytes == nil {
-		return shim.Error("Could not locate time")
+	dataAsBytes, _ := APIstub.GetState(args[0])
+	if dataAsBytes == nil {
+		return shim.Error("Could not locate charity")
 	}
-	return shim.Success(timeAsBytes)
+	return shim.Success(dataAsBytes)
 }
 
 /*
@@ -94,18 +98,18 @@ func (s *SmartContract) queryTime(APIstub shim.ChaincodeStubInterface, args []st
 Will add test data (10 time catches)to our network
  */
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-	tracker := []Tracker{
-		Tracker{Name: "David Wallace", Company: "Dunder Mifflin", Team: "Sales", Date: "02-11-1992", Intime: "1504057825", Outtime: "1504509000"},
-		Tracker{Name: "Jim Halpert", Company: "Dunder Mifflin", Team: "Sales", Date: "02-11-1992", Intime: "1504057900", Outtime: "1504507000"},
-		Tracker{Name: "Pam Halpert", Company: "Dunder Mifflin", Team: "Reception", Date: "02-11-1992", Intime: "1504056000", Outtime: "1504506000"},
+	registered := []Registration{
+		Registration{Name: "United Way", Category: "Domestic Needs", Country: "United States", State: "Virginia", City: "Alexandria", Registered: "02-19-1992", Director: "Brian Gallagher"},
+		Registration{Name: "American National Red Cross", Category: "Domestic Needs", Country: "United States", State: "District of Columbia", City: "Washington", Registered: "10-13-1980", Director: "Gail McGovern"},
+		Registration{Name: "Salvation Army", Category: "Domestic Needs", Country: "United States", State: "Virginia", City: "Alexandria", Registered: "08-02-1989", Director: "David Jeffrey"},
 	}
 
 	i := 0
-	for i < len(tracker) {
+	for i < len(registered) {
 		fmt.Println("i is ", i)
-		trackerAsBytes, _ := json.Marshal(tracker[i])
-		APIstub.PutState(strconv.Itoa(i+1), trackerAsBytes)
-		fmt.Println("Added", tracker[i])
+		registeredAsBytes, _ := json.Marshal(registered[i])
+		APIstub.PutState(strconv.Itoa(i+1), registeredAsBytes)
+		fmt.Println("Added", registered[i])
 		i = i + 1
 	}
 
@@ -114,11 +118,11 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 
 
 /*
- * The queryAllTime method *
+ * The queryAllCharities method *
 allows for assessing all the records added to the ledger(all time catches)
 This method does not take any arguments. Returns JSON string containing results.
  */
-func (s *SmartContract) queryAllTime(APIstub shim.ChaincodeStubInterface) sc.Response {
+func (s *SmartContract) queryAllCharities(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	startKey := "0"
 	endKey := "999"
@@ -160,6 +164,28 @@ func (s *SmartContract) queryAllTime(APIstub shim.ChaincodeStubInterface) sc.Res
 
 	return shim.Success(buffer.Bytes())
 }
+
+/*
+ * The recordCharity method *
+This method takes in eight arguments (attributes to be saved in the ledger).
+ */
+func (s *SmartContract) recordCharity(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 8 {
+		return shim.Error("Incorrect number of arguments. Expecting 8")
+	}
+
+	var registered = Registration{ Name: args[1], Category: args[2], Country: args[3], State: args[4], City: args[5], Registered: args[6], Director: args[7] }
+
+	registeredAsBytes, _ := json.Marshal(registered)
+	err := APIstub.PutState(args[0], registeredAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to record charity: %s", args[0]))
+	}
+
+	return shim.Success(nil)
+}
+
 
 /*
  * main function *
