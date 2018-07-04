@@ -18,7 +18,7 @@ Installation Instructions
 
   * ./startFabric.sh
 
-Install the required Node packages and register the Admin and User components of the network before starting the application.
+From the same charity-app folder, install the required Node packages and register the Admin and User components of the network before starting the application.
 
 * npm install
 
