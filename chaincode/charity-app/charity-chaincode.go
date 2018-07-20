@@ -32,14 +32,16 @@ Structure tags are used by encoding/json library
 */
 type Registration struct {
 
-	ID string `json:"id"`
-	Name string `json:"name"`
-	Category string `json:"category"`
+	Transaction_ID string `json:"id"`
+	Charity string `json:"name"`
+	Event string `json:"event"`
 	Country  string `json:"country"`
 	State  string `json:"state"`
-	City  string `json:"city"`
-	Registered string `json:"date"`
-	Director  string `json:"director"`
+	Area  string `json:"area"`
+	Event_Created string `json:"date"`
+	Target string `json:"target"`
+	Donated string `json:"donated"`
+	Balance string `json:"balance"`
 }
 
 /*
@@ -62,35 +64,15 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	// Retrieve the requested Smart Contract function and arguments
 	function, args := APIstub.GetFunctionAndParameters()
 	// Route to the appropriate handler function to interact with the ledger
-	if function == "queryCharity" {
-		return s.queryCharity(APIstub, args)
-	} else if function == "initLedger" {
+	if function == "initLedger" {
 		return s.initLedger(APIstub)
-	} else if function == "queryAllCharities" {
-		return s.queryAllCharities(APIstub)
-	} else if function == "recordCharity" {
-		return s.recordCharity(APIstub, args)
+	} else if function == "findEvents" {
+		return s.findEvents(APIstub)
+	} else if function == "recordEvent" {
+		return s.recordEvent(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
-}
-
-/*
- * The queryCharity method *
-Used to view the records of one particular charity
-It takes one argument -- the key for the charity in question
- */
-func (s *SmartContract) queryCharity(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
-	}
-
-	dataAsBytes, _ := APIstub.GetState(args[0])
-	if dataAsBytes == nil {
-		return shim.Error("Could not locate charity")
-	}
-	return shim.Success(dataAsBytes)
 }
 
 /*
@@ -99,9 +81,7 @@ Will add test data (10 time catches)to our network
  */
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	registered := []Registration{
-		Registration{Name: "United Way", Category: "Domestic Needs", Country: "United States", State: "Virginia", City: "Alexandria", Registered: "02-19-1992", Director: "Brian Gallagher"},
-		Registration{Name: "American National Red Cross", Category: "Domestic Needs", Country: "United States", State: "District of Columbia", City: "Washington", Registered: "10-13-1980", Director: "Gail McGovern"},
-		Registration{Name: "Salvation Army", Category: "Domestic Needs", Country: "United States", State: "Virginia", City: "Alexandria", Registered: "08-02-1989", Director: "David Jeffrey"},
+		Registration{Charity: "United Way", Event: "Earthquake", Country: "United States", State: "California", Area: "Los Angeles", Event_Created: "20-07-2018", Target: "100000", Donated: "0", Balance: "0"},
 	}
 
 	i := 0
@@ -122,7 +102,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 allows for assessing all the records added to the ledger(all time catches)
 This method does not take any arguments. Returns JSON string containing results.
  */
-func (s *SmartContract) queryAllCharities(APIstub shim.ChaincodeStubInterface) sc.Response {
+func (s *SmartContract) findEvents(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	startKey := "0"
 	endKey := "999"
@@ -169,13 +149,13 @@ func (s *SmartContract) queryAllCharities(APIstub shim.ChaincodeStubInterface) s
  * The recordCharity method *
 This method takes in eight arguments (attributes to be saved in the ledger).
  */
-func (s *SmartContract) recordCharity(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) recordEvent(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 8 {
+	if len(args) != 10 {
 		return shim.Error("Incorrect number of arguments. Expecting 8")
 	}
 
-	var registered = Registration{ Name: args[1], Category: args[2], Country: args[3], State: args[4], City: args[5], Registered: args[6], Director: args[7] }
+	var registered = Registration{Charity: args[1], Event: args[2], Country: args[3], State: args[4], Area: args[5], Event_Created: args[6], Target: args[7], Donated: args[8], Balance: args[9]}
 
 	registeredAsBytes, _ := json.Marshal(registered)
 	err := APIstub.PutState(args[0], registeredAsBytes)
