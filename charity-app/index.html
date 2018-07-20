@@ -1,0 +1,179 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Charity Tracker</title>
+
+    <!-- require jquery and bootstrap scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+
+    <!-- adding style here -->
+    <style type="text/css">
+      body {background-color: #EBF4FA;}
+
+      header{
+        background-color: #000000;
+        font-size:25px;
+        padding:25px;
+      }
+      header, .form-group{
+        margin-bottom:2%;
+      }
+      .form-group{
+        width:50%;
+        margin-bottom:2%;
+      }
+      #body{
+        margin-left:3%;
+        margin-right:3%;
+        margin-bottom:2%;
+      }
+      .form-control{
+        margin: 0px;
+        margin-bottom:1%;
+      }
+      #right_header{
+        width:20%;
+        font-size:30px;
+        margin-right:0px;
+      }
+      #left_header{
+        margin-left:0;
+        width:40%;
+        display:inline-block;
+        color: #FEFCFF;
+      }
+      #headerline {
+        width:0%;
+        font-size:20px;
+        margin-bottom:2%;
+        color: #FEFCFF;
+        /*display: inline-block;*/
+      }
+      #line {
+        width:0%;
+        font-size:20px;
+        margin-bottom:2%;
+        /*display: inline-block;*/
+      }
+      table {
+          font-family: arial, sans-serif;
+          width: 100%;
+      }
+      td, th {
+          border: 2px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body ng-app="application" ng-controller="appController">
+    <header>
+      <b id="left_header">Charity Registration and Spending Record</b>
+      <div><i id="headerline">Built with Hyperledger Fabric (Blockchain)</i></div>
+    </header>
+
+    <div id="body">
+      <div class="form-group">
+        <b id=line>All Registered Charities</b> 
+        <span id=line>: Find information of all registered charities.</span>
+        <p><input id="queryAllCharities" type="submit" style="font-face: 'Comic Sans MS'; font-size: medium; color: white; background-color: #800000; border: 2pt black" value="Submit" class="btn btn-primary" color="red" ng-click="queryAllCharities()"></p>
+      </div>
+
+      <table id="all_charities" class="table" align="center">
+
+        <tr>
+          <th bgcolor="#FFE87C">ID</th>
+          <th bgcolor="#FFE87C">Name</th>
+          <th bgcolor="#FFE87C">Category</th>
+          <th bgcolor="#FFE87C">Country</th>
+          <th bgcolor="#FFE87C">State</th>
+          <th bgcolor="#FFE87C">City</th>
+          <th bgcolor="#FFE87C">Date of Registration</th>
+          <th bgcolor="#FFE87C">Director</th>
+
+        </tr>
+
+        <tr ng-repeat="charity in all_time">
+          <td>{{charity.Key}}</td>
+          <td>{{charity.name}}</td>
+          <td>{{charity.category}}</td>
+          <td>{{charity.country}}</td>
+          <td>{{charity.state}}</td>
+          <td>{{charity.city}}</td>
+          <td>{{charity.date}}</td>
+          <td>{{charity.director}}</td>
+        </tr>
+      </table>
+
+      <div class="form-group">
+        <b id=line>Specific Charity</b> 
+        <span id=line>: Enter an ID to find details for a single charity.</span>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid id</h5>
+        <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="charity_id">
+        <p><input id="querySubmit" type="submit" style="font-face: 'Comic Sans MS'; font-size: medium; color: white; background-color: #800000; border: 2pt black" value="Submit" class="btn btn-primary" color="red" ng-click="queryCharity()"></p>
+      </div>
+
+      <table id="query_charity" class="table" align="center">
+
+        <tr>
+          <th bgcolor="#FFE87C">Name</th>
+          <th bgcolor="#FFE87C">Category</th>
+          <th bgcolor="#FFE87C">Country</th>
+          <th bgcolor="#FFE87C">State</th>
+          <th bgcolor="#FFE87C">City</th>
+          <th bgcolor="#FFE87C">Date of Registration</th>
+          <th bgcolor="#FFE87C">Director</th>
+
+        </tr>
+
+          <td>{{query_charity.name}}</td>
+          <td>{{query_charity.category}}</td>
+          <td>{{query_charity.country}}</td>
+          <td>{{query_charity.state}}</td>
+          <td>{{query_charity.city}}</td>
+          <td>{{query_charity.date}}</td>
+          <td>{{query_charity.director}}</td>
+
+      </table>
+
+      <div class="form-group">
+        <b id=line>Create Charity Record</b> 
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_charity}}</h5>
+        <br>
+        <b id=line>Enter unique id:</b> 
+          <input class="form-control" type="text" placeholder="Ex: 11" ng-model="charity.id">
+        Enter name of charity:
+          <input class="form-control" type="text" placeholder="Ex: Red Cross" ng-model="charity.name">
+        Enter category:
+          <input class="form-control" type="text" placeholder="Ex: Domestic Needs" ng-model="charity.category">
+        Enter country:
+          <input class="form-control" type="text" placeholder="Ex: United States" ng-model="charity.country">
+        Enter state:
+          <input class="form-control" type="text" placeholder="Ex: Washington"   ng-model="charity.state">
+        Enter name of city:
+          <input class="form-control" type="text" placeholder="Ex: Seattle" ng-model="charity.city">
+        Enter date:
+          <input class="form-control" type="text" placeholder="Ex: 12-30-1992" ng-model="charity.date">
+        Enter name of director:
+          <input class="form-control" type="text" placeholder="Ex: Christopher Nolan" ng-model="charity.director">
+
+        <p><input id="createSubmit" type="submit" style="font-face: 'Comic Sans MS'; font-size: medium; color: white; background-color: #800000; border: 2pt black" value="Create" class="btn btn-primary" color="red" ng-click="recordCharity()"></p>
+
+        <a href="?" class="btn btn-default">Clear</a>
+        <i>* Note: This will refresh the page.</i>
+
+      </div>
+
+    </div>
+  </body>
+    <!-- requiring the angular page -->
+    <script type="text/javascript" src="org.js"> </script>
+</html>
