@@ -34,3 +34,9 @@ From the same charity-app folder, install the required Node packages and registe
 * node server.js
 
 The client should launch on localhost:8000 in any web browser.
+
+
+__Screenshots__
+
+![img](https://github.com/SachinSaligram/charity-blockchain/blob/master/images/homepage.png)
+![img](https://github.com/SachinSaligram/charity-blockchain/blob/master/images/org%20view.png)
