@@ -10,7 +10,8 @@
         "express": "latest",
         "fabric-ca-client": "^1.0.2",
         "fabric-client": "^1.0.2",
-        "grpc": "^1.6.0"
+        "grpc": "^1.6.0",
+        "mysql": "^2.16.0"
     },
     "license": "Apache-2.0",
     "keywords": [

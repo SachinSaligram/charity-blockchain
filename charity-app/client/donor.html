@@ -1,0 +1,188 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Charity Event Tracker</title>
+
+    <!-- require jquery and bootstrap scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+
+    <!-- adding style here -->
+    <style type="text/css">
+      body {background-color: #EBF4FA;}
+      header{
+        background-color: #000000;
+        font-size:25px;
+        padding:25px;
+      }
+      header, .form-group{
+        margin-bottom:2%;
+      }
+      .form-group{
+        width:50%;
+        margin-bottom:2%;
+      }
+      #body{
+        margin-left:3%;
+        margin-right:3%;
+        margin-bottom:2%;
+      }
+      .form-control{
+        margin: 0px;
+        margin-bottom:1%;
+      }
+      #right_header{
+        width:20%;
+        font-size:30px;
+        margin-right:0px;
+      }
+      #left_header{
+        margin-left:0;
+        width:40%;
+        display:inline-block;
+        color: #FEFCFF;
+      }
+      #headerline {
+        width:0%;
+        font-size:20px;
+        margin-bottom:2%;
+        color: #FEFCFF;
+        /*display: inline-block;*/
+      }
+      #line {
+        width:0%;
+        font-size:20px;
+        margin-bottom:2%;
+        /*display: inline-block;*/
+      }
+      table {
+          font-family: arial, sans-serif;
+          width: 20%;
+      }
+      td, th {
+          border: 2px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+    </style>
+
+    <script src="Flights.js" type="text/javascript"></script>
+
+  </head>
+  <body ng-app="application" ng-controller="appController">
+    <header>
+      <b id="left_header">Charity Event Registration and Spending Record</b>
+      <div><i id="headerline">Built with Hyperledger Fabric (Blockchain)</i></div>
+      <br>
+      <a id="headerline" href = "index.html" type="submit" style="font-face: 'Comic Sans MS'; font-size: 16px; color: black; background-color: #E6E6E6; border: 2pt black; width: 100px;" class="btn btn-primary" color="red">Homepage</a>
+    </header>
+
+    <div id="body">
+      <div class="form-group">
+        <b id=line>Query the Blockchain: </b> 
+        <span id=line>View all transactions that have ever occured.</span>
+        <p><input id="queryAllCharities" type="submit" style="font-face: 'Comic Sans MS'; font-size: medium; color: white; background-color: #800000; border: 2pt black" value="Submit" class="btn btn-primary" color="red" ng-click="findEvents()"></p>
+      </div>
+
+      <table id="all_charities" class="table" align="center">
+        
+        <tr>
+          <th bgcolor="#FFE87C">Transaction ID</th>
+          <th bgcolor="#FFE87C">Charity</th>
+          <th bgcolor="#FFE87C">Event</th>
+          <th bgcolor="#FFE87C">Country</th>
+          <th bgcolor="#FFE87C">State</th>
+          <th bgcolor="#FFE87C">Area</th>
+          <th bgcolor="#FFE87C">Event_Created</th>
+          <th bgcolor="#FFE87C">Target</th>
+          <th bgcolor="#FFE87C">Donated</th>
+          <th bgcolor="#FFE87C">Balance</th>
+
+        </tr>
+
+        <tr ng-repeat="event in all_time">
+          <td>{{event.Key}}</td>
+          <td>{{event.name}}</td>
+          <td>{{event.event}}</td>
+          <td>{{event.country}}</td>
+          <td>{{event.state}}</td>
+          <td>{{event.area}}</td>
+          <td>{{event.date}}</td>
+          <td>{{event.target}}</td>
+          <td>{{event.donated}}</td>
+          <td>{{event.balance}}</td>
+        </tr>
+
+      </table>
+
+      <br>
+
+      <div class="form-group">
+        <b id=line>Find a cause!: </b> 
+        <span id=line>Find all charities and their events where you can make a contribution.</span>
+      	<p><input id="queryAllCharities" type="submit" style="font-face: 'Comic Sans MS'; font-size: medium; color: white; background-color: #800000; border: 2pt black" value="Find out!" class="btn btn-primary" color="red" ng-click="mongo()"></p>
+      </div>
+
+        <table>
+        
+        <tr>
+          <th bgcolor="#FFE87C">Charity</th>
+          <th bgcolor="#FFE87C">Event</th>
+          <th bgcolor="#FFE87C">Country</th>
+          <th bgcolor="#FFE87C">State</th>
+          <th bgcolor="#FFE87C">Area</th>
+          <th bgcolor="#FFE87C">Target</th>
+          <th bgcolor="#FFE87C">Balance</th>
+        </tr>
+
+        <tr ng-repeat="event in mongo_data">
+          <td>{{event.Charity}}</td>
+          <td>{{event.Event}}</td>
+          <td>{{event.Country}}</td>
+          <td>{{event.State}}</td>
+          <td>{{event.Area}}</td>
+          <td>{{event.Target}}</td>
+          <td>{{event.Balance}}</td>
+        </tr>
+
+      </table>  
+
+      <br>
+
+      <br>
+
+      <div class="form-group">
+        <b id=line>Make a donation!</b>
+        <br>
+        Enter unique id: 
+          <input class="form-control" type="text" placeholder="Ex: 11" ng-model="event.id">
+        Enter charity: 
+          <input class="form-control" type="text" placeholder="Ex: 11" ng-model="event.name">
+        Enter event:
+          <input class="form-control" type="text" placeholder="Ex: Red Cross" ng-model="event.event">
+        Enter amount:
+          <input class="form-control" type="text" placeholder="Ex: Domestic Needs" ng-model="event.amount">
+
+        <p><input id="createSubmit" type="submit" style="font-face: 'Comic Sans MS'; font-size: medium; color: white; background-color: #800000; border: 2pt black" value="Create" class="btn btn-primary" color="red" ng-click="recordDonation()"></p>
+
+        <a href="?" class="btn btn-default">Clear</a>
+        <i>* Note: This will refresh the page.</i>
+
+        <br>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_event}}</h5>
+        <br>
+
+      </div>
+
+    </div>
+  </body>
+    <!-- requiring the angular page -->
+    <script type="text/javascript" src="donor.js"> </script>
+</html>

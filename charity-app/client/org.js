@@ -52,7 +52,7 @@ app.factory('appFactory', function($http){
 
 	factory.recordEvent = function(data, callback){
 		
-		var event = data.id + "-" + data.name + "-" + data.event + "-" + data.country + "-" + data.state + "-" + data.area + "-" + data.date + "-" + data.target;
+		var event = data.id + "-" + data.name + "-" + data.event + "-" + data.country + "-" + data.state + "-" + data.area + "-" + data.target;
 
     	$http.get('/add_event/'+event).success(function(output){
 			callback(output)
