@@ -2,9 +2,17 @@
 
 __Simple blockchain application to keep a track of charity registrations and spending.__
 
-Every time you donate money to a charity, do you know how much money they have at any point of time? Do you know how when, where and how money is being spent? I am building a simple blockchain application to keep a track of charity registrations and spending. This will help track every charity that has registered and track identify where every dollar is spent.
+Every time you donate money to a charity, do you know how much money they have at any point in time? Do you know when, where and how your money is being spent? I am building a simple blockchain application to keep track of charity registrations and spending. This will help identify where every dollar is donated and spent.
 
-This is a work in progress. Keep a look out for new features and do provide your suggestions! To have a look at what's working right now, follow the installation and setup instructions below.
+__Current Issues__ (Working on a fix!)
+
+* Removed the ability to create a unique channel for each charity organization due to an error.
+* Removed the ability to record a query to the ledger as a transaction. Looking to add a new feature indicating whether a read or write was performed and record every activity in the ledger.
+* Working to provide a historical view of transactions made by every user. This would provide a more detailed yet cleaner user interface.
+* Working on building a view to show spending by charity.
+* Looking to automate the process of capturing a unique ID for each ledger entry. (Currently user is expected to enter a unique ID that is currently not in the ledger)
+
+This is a work in progress. Keep a look out for new features and do provide your suggestions! To have a look at what's working right now, follow the installation instructions below.
 
 
 __Installation Instructions__
