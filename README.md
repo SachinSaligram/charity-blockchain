@@ -16,7 +16,7 @@ This is a work in progress. Keep a look out for new features and do provide your
 
 __Demo__
 
-[![](http://i3.ytimg.com/vi/Ru4A2LDpeWY/maxresdefault.jpg)](https://youtu.be/Ru4A2LDpeWY)
+[![](https://github.com/SachinSaligram/charity-blockchain/blob/master/images/hqdefault.jpg)](https://youtu.be/Ru4A2LDpeWY)
 
 __Installation Instructions__
 
