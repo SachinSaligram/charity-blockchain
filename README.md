@@ -14,6 +14,9 @@ __Current Issues__ (Working on a fix!)
 
 This is a work in progress. Keep a look out for new features and do provide your suggestions! To have a look at what's working right now, follow the installation instructions below.
 
+__Demo__
+
+[![](http://i3.ytimg.com/vi/Ru4A2LDpeWY/maxresdefault.jpg)](https://youtu.be/Ru4A2LDpeWY)
 
 __Installation Instructions__
 
@@ -42,7 +45,6 @@ From the same charity-app folder, install the required Node packages and registe
 * node server.js
 
 The client should launch on localhost:8000 in any web browser.
-
 
 __Screenshots__
 
