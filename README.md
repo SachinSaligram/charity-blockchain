@@ -16,7 +16,7 @@ This is a work in progress. Keep a look out for new features and do provide your
 
 __Demo__
 
-[![](https://github.com/SachinSaligram/charity-blockchain/blob/master/images/hqdefault.jpg)](https://youtu.be/Ru4A2LDpeWY)
+Click [HERE](https://youtu.be/Ru4A2LDpeWY) to view a demo!
 
 __Installation Instructions__
 
