@@ -10,7 +10,7 @@ __Current Issues__ (Working on a fix!)
 * Removed the ability to record a query to the ledger as a transaction. Looking to add a new feature indicating whether a read or write was performed and record every activity in the ledger.
 * Working to provide a historical view of transactions made by every user. This would provide a more detailed yet cleaner user interface.
 * Working on building a view to show spending by charity.
-* Looking to automate the process of capturing a unique ID for each ledger entry. (Currently user is expected to enter a unique ID that is currently not in the ledger)
+* Looking to automate the process of capturing a unique ID for each ledger entry. (Currently, a user is expected to enter a unique ID that is not in the ledger)
 
 This is a work in progress. Keep a look out for new features and do provide your suggestions! To have a look at what's working right now, follow the installation instructions below.
 
