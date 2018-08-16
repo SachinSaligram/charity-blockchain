@@ -224,14 +224,16 @@ function main_func(key, name, event, country, state, area, date, target, donated
 				    // check the results in the order the promises were added to the promise all list
 				    if (results && results[0] && results[0].status === 'SUCCESS') {
 				        console.log('Successfully sent transaction to the orderer.');
-				        return callBack(tx_id.getTransactionID());
+				        // return callBack(tx_id.getTransactionID());
+				        console.log(tx_id.getTransactionID());
 				    } else {
 				        console.error('Failed to order the transaction. Error code: ' + response.status);
 				    }
 
 				    if(results && results[1] && results[1].event_status === 'VALID') {
 				        console.log('Successfully committed the change to the ledger by the peer');
-				        return callBack(tx_id.getTransactionID());
+				        // return callBack(tx_id.getTransactionID());
+				        console.log(tx_id.getTransactionID());
 				    } else {
 				        console.log('Transaction failed to be committed to the ledger due to ::'+results[1].event_status);
 				    }
@@ -382,9 +384,9 @@ return{
 			var state = array[4]
 			var area = array[5]
 			var date = new Date().toLocaleString()
-			var target = array[7]
+			var target = array[6]
 			var donated = "0"
-			var balance = array[7]
+			var balance = array[6]
 
 			var flag = "creation";
 

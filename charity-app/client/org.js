@@ -14,6 +14,8 @@ app.controller('appController', function($scope, appFactory){
 
 	$scope.findEvents = function(){
 
+		
+
 		appFactory.findEvents(function(data){
 			var array = [];
 			for (var i = 0; i < data.length; i++){
